@@ -14,7 +14,7 @@
             offset;
 
         for (x = 0; x < e.data.w; x = x + e.data.skip) {
-            for (y = 0; y < e.data.h; y = y + e.data.skip) {
+            for (y = e.data.start; y < e.data.stop; y = y + e.data.skip) {
                 match = true;
                 offset = ((y * (e.data.w * 4)) + (x * 4));
                 // dont check alpha
@@ -27,6 +27,7 @@
                         break;
                     }
                 }
+
                 if (match) {
                     e.data.detector_data.data[offset] = 0;
                     e.data.detector_data.data[offset + 1] = 255;
@@ -35,8 +36,6 @@
                     count += 1;
                     x_sum += x;
                     y_sum += y;
-                } else {
-                    e.data.detector_data.data[offset + 3] = 0;
                 }
             }
         }

@@ -12,7 +12,7 @@ window.define(['detector', 'overlay'], function (detector, overlay) {
                 y = detector.last_run_data.y_sum / detector.last_run_data.count;
 
             overlay.detector.ctx.beginPath();
-            overlay.detector.ctx.fillStyle = 'rgba(255,0,0,0.4)';
+            overlay.detector.ctx.fillStyle = 'rgba(255,0,0,0.2)';
             overlay.detector.ctx.rect(0, y - half, overlay.detector.overlay.width, size);
             overlay.detector.ctx.rect(x - half, 0, size, overlay.detector.overlay.height);
             overlay.detector.ctx.fill();

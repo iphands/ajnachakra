@@ -5,7 +5,7 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
     var ret = {},
         priv = {},
         skip = 1,
-        fudge = 0.08,
+        fudge = 0.04,
         debug = true,
         v = document.getElementById('video'),
         ticks = 0,
@@ -24,35 +24,32 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
         }
     };
 
-
     // console.time('detector');
     ret.detect = function (color_array) {
-        if (debug) {
-            ticks = ticks + 1;
-        }
-
-        // priv.do_debug(function () { console.time('detect'); });
-
+        var i = 0,
+            threads = 1,
+            chunk = (v.videoHeight) / threads;
         if (color_array) {
-            (function () {
-                shadow.video.load_data();
-                priv.start_worker(v, skip, fudge, shadow, color_array);
-            }());
+            shadow.video.load_data();
+            for (i = 0; i < threads; i = i + 1) {
+                // console.log("thread: " + (chunk * i) + ", " + ((chunk * i) + chunk));
+                priv.start_worker((chunk * i), ((chunk * i) + chunk), v, skip, fudge, shadow, color_array);
+            }
         }
     };
 
-    priv.start_worker = function (v, skip, fudge, shadow, color_array) {
+    priv.start_worker = function (start, stop, v, skip, fudge, shadow, color_array) {
         (function () {
             var worker = new Worker("js/worker.js");
 
             worker.onmessage = function (e) {
                 ret.last_run_data = e.data;
-                // console.log(e.data.image_data.data[0]);
                 overlay.detector.ctx.putImageData(e.data.detector_data, 0, 0);
-                // overlay.gui.ctx.putImageData(e.data.detector_data, 0, 0);
             };
 
             worker.postMessage({
+                start: start,
+                stop: stop,
                 color_array: color_array,
                 w: v.videoWidth,
                 h: v.videoHeight,
