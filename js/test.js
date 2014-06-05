@@ -65,7 +65,7 @@ define([], function () {
         window.require(['picker', 'shadow_canvas', 'detector', 'overlay', 'cross_hairs'], function (picker, shadow, detector, overlay, cross_hairs) {
             function do_frame() {
                 if (picker.color_array) {
-                    overlay.detector.clear();
+                    // overlay.detector.clear();
                     detector.detect(picker.color_array);
                     cross_hairs.draw();
                 }
@@ -73,7 +73,7 @@ define([], function () {
                 window.requestAnimationFrame(do_frame);
             }
             pub.init_video();
-            c = pub.init_canvas(shadow.canvas);
+            c = pub.init_canvas(shadow.video.canvas);
             window.requestAnimationFrame(do_frame);
         });
     };

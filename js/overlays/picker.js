@@ -25,7 +25,7 @@ window.define(['overlay', 'shadow_canvas'], function (overlay, shadow) {
     overlay.gui.overlay.onclick = function (e) {
         var x = e.offsetX,
             y = e.offsetY,
-            color_array = shadow.get_pixel_color(x, y);
+            color_array = shadow.video.get_pixel_color(x, y);
 
         overlay.gui.ctx.rect(30, 30, 30, 30);
         overlay.gui.ctx.strokeStyle = 'rgb(255,255,255,255)';

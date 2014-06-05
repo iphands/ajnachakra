@@ -17,8 +17,14 @@ window.define([], function () {
 
     ret.gui.overlay = document.getElementById('overlay-gui');
     ret.gui.ctx = ret.gui.overlay.getContext('2d');
-    ret.gui.img_data = ret.gui.ctx.createImageData(ret.gui.overlay.width, ret.gui.overlay.height);
+    // ret.gui.img_data = ret.gui.ctx.createImageData(ret.gui.overlay.width, ret.gui.overlay.height);
+    ret.gui.img_data = ret.gui.ctx.createImageData(640, 480);
 
+    // ret.detector.overlay = document.getElementById('canvas');
+    // ret.detector.overlay.width = 640;
+    // ret.detector.overlay.height = 480;
+    // ret.detector.ctx = ret.gui.overlay.getContext('2d');
+    // ret.detector.img_data = ret.gui.ctx.createImageData(ret.gui.overlay.width, ret.gui.overlay.height);
 
     return ret;
 });

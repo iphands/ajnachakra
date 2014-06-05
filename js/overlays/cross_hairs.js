@@ -13,10 +13,8 @@ window.define(['detector', 'overlay'], function (detector, overlay) {
 
             overlay.detector.ctx.beginPath();
             overlay.detector.ctx.fillStyle = 'rgba(255,0,0,0.4)';
-
             overlay.detector.ctx.rect(0, y - half, overlay.detector.overlay.width, size);
             overlay.detector.ctx.rect(x - half, 0, size, overlay.detector.overlay.height);
-
             overlay.detector.ctx.fill();
         }
     };

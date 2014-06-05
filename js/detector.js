@@ -1,10 +1,10 @@
-/*global window, document Worker*/
+/*global window, document, Worker*/
 "use strict";
 
 window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
     var ret = {},
         priv = {},
-        skip = 2,
+        skip = 1,
         fudge = 0.08,
         debug = true,
         v = document.getElementById('video'),
@@ -35,48 +35,30 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
 
         if (color_array) {
             (function () {
-                var x = 0,
-                    y = 0,
-                    match = true,
-                    count = 0,
-                    x_sum = 0,
-                    y_sum = 0,
-                    i,
-                    diff;
-
-                // priv.do_debug(function () { console.time('load'); });
-                shadow.load_data();
-                // priv.do_debug(function () { console.timeEnd('load'); });
-
-                // do web worker
-                priv.start_worker(v, diff, skip, fudge, shadow, color_array);
-
-                // priv.do_debug(function () { console.time('loop'); });
-                // priv.do_debug(function () { console.timeEnd('loop'); });
-
-
-                // priv.do_debug(function () { console.timeEnd('detect'); });
+                shadow.video.load_data();
+                priv.start_worker(v, skip, fudge, shadow, color_array);
             }());
         }
     };
 
-    priv.start_worker = function (v, diff, skip, fudge, shadow, color_array) {
+    priv.start_worker = function (v, skip, fudge, shadow, color_array) {
         (function () {
             var worker = new Worker("js/worker.js");
 
             worker.onmessage = function (e) {
                 ret.last_run_data = e.data;
                 // console.log(e.data.image_data.data[0]);
-                // overlay.detector.ctx.putImageData(e.data.image_data, 0, 0);
+                overlay.detector.ctx.putImageData(e.data.detector_data, 0, 0);
+                // overlay.gui.ctx.putImageData(e.data.detector_data, 0, 0);
             };
 
             worker.postMessage({
                 color_array: color_array,
                 w: v.videoWidth,
                 h: v.videoHeight,
-                diff: diff,
                 skip: skip,
-                image_data: shadow.shadow_data,
+                shadow_data: shadow.video.shadow_data,
+                detector_data: shadow.detector.shadow_data,
                 fudge: fudge
             });
         }());
