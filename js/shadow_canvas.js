@@ -9,6 +9,7 @@ window.define([], function () {
 
     ret.load_data = function () {
         priv.data = ret.ctx.getImageData(0, 0, ret.canvas.width, ret.canvas.height);
+        ret.shadow_data = priv.data;
     };
 
     ret.get_pixel_color_fast = function (x, y, i) {
