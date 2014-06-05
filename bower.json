@@ -1,0 +1,11 @@
+{
+    "name": "ajnachakra",
+    "version": "0.0.0",
+    "private": true,
+    "directory" : "vendor",
+    "dependencies": {
+		"jquery": "*",
+        "requirejs": "*",
+		"domReady": "*"
+    }
+}
