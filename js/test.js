@@ -62,11 +62,12 @@ define([], function () {
 
 
 
-    window.require(['picker', 'shadow_canvas', 'detector', 'overlay'], function (picker, shadow, detector, overlay) {
+    window.require(['picker', 'shadow_canvas', 'detector', 'overlay', 'cross_hairs'], function (picker, shadow, detector, overlay, cross_hairs) {
         function do_frame() {
             if (picker.color_array) {
                 overlay.detector.clear();
                 detector.detect(picker.color_array);
+                cross_hairs.draw();
             }
             c.draw();
             window.requestAnimationFrame(do_frame);

@@ -9,7 +9,8 @@ require.config({
         jquery: 'vendor/jquery/dist/jquery.min',
         domReady: 'vendor/domReady/domReady',
         picker: 'overlays/picker',
-        overlay: 'overlays/overlay'
+        overlay: 'overlays/overlay',
+        cross_hairs: 'overlays/cross_hairs'
     }
 });
 

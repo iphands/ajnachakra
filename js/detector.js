@@ -3,9 +3,10 @@
 
 window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
     var ret = {},
-        skip = 2,
+        priv = {},
+        skip = 3,
         fudge = 0.06,
-        debug = false,
+        debug = true,
         v = document.getElementById('video'),
         ticks = 0,
         p = overlay.detector.ctx.createImageData(1, 1);
@@ -15,13 +16,21 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
     p.data[2] = 0;
     p.data[3] = 255;
 
-    ret.detect = function (color_array) {
+    priv.do_debug = function (func) {
         if (debug) {
             if (ticks % 10 === 0) {
-                console.log(color_array);
+                func();
             }
+        }
+    };
+
+    // console.time('detector');
+    ret.detect = function (color_array) {
+        if (debug) {
             ticks = ticks + 1;
         }
+
+        // priv.do_debug(function () { console.time('detect'); });
 
         if (color_array) {
             (function () {
@@ -34,8 +43,16 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
                     i,
                     diff;
 
+                // priv.do_debug(function () { console.time('load'); });
                 shadow.load_data();
+                // priv.do_debug(function () { console.timeEnd('load'); });
 
+                // var myWorker = new Worker("worker.js");
+                // myWorker.onmessage = function (oEvent) {
+                //     console.log("Called back by the worker!\n");
+                // };
+
+                // priv.do_debug(function () { console.time('loop'); });
                 for (x = 0; x < v.videoWidth; x = x + skip) {
                     for (y = 0; y < v.videoHeight; y = y + skip) {
                         match = true;
@@ -50,18 +67,21 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
 
                         if (match) {
                             overlay.detector.ctx.putImageData(p, x, y);
-                            count += count;
+                            count += 1;
                             x_sum += x;
                             y_sum += y;
                         }
                     }
                 }
+                // priv.do_debug(function () { console.timeEnd('loop'); });
 
                 ret.last_run_data = {
                     count: count,
                     x_sum: x_sum,
                     y_sum: y_sum
                 };
+
+                // priv.do_debug(function () { console.timeEnd('detect'); });
             }());
         }
     };
