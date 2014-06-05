@@ -14,4 +14,6 @@ require.config({
     }
 });
 
-require(['start'], function () {});
+require(['start'], function (start) {
+    start.init();
+});
