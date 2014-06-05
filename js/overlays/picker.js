@@ -22,16 +22,16 @@ window.define(['overlay', 'shadow_canvas'], function (overlay, shadow) {
             array[3] + ')';
     };
 
-    overlay.overlay.onclick = function (e) {
+    overlay.gui.overlay.onclick = function (e) {
         var x = e.offsetX,
             y = e.offsetY,
             color_array = shadow.get_pixel_color(x, y);
 
-        overlay.ctx.rect(30, 30, 30, 30);
-        overlay.ctx.strokeStyle = 'rgb(255,255,255,255)';
-        overlay.ctx.fillStyle = funcs.array_to_style(color_array);
-        overlay.ctx.fill();
-        overlay.ctx.stroke();
+        overlay.gui.ctx.rect(30, 30, 30, 30);
+        overlay.gui.ctx.strokeStyle = 'rgb(255,255,255,255)';
+        overlay.gui.ctx.fillStyle = funcs.array_to_style(color_array);
+        overlay.gui.ctx.fill();
+        overlay.gui.ctx.stroke();
     };
 
     return ret;

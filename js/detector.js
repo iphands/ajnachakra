@@ -8,7 +8,7 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
         debug = false,
         v = document.getElementById('video'),
         ticks = 0,
-        p = overlay.ctx.createImageData(1, 1);
+        p = overlay.detector.ctx.createImageData(1, 1);
 
     p.data[0] = 0;
     p.data[1] = 255;
@@ -25,7 +25,15 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
 
         if (color_array) {
             (function () {
-                var x = 0, y = 0, i, diff, match = true;
+                var x = 0,
+                    y = 0,
+                    match = true,
+                    count = 0,
+                    x_sum = 0,
+                    y_sum = 0,
+                    i,
+                    diff;
+
                 shadow.load_data();
 
                 for (x = 0; x < v.videoWidth; x = x + skip) {
@@ -41,16 +49,21 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
                         }
 
                         if (match) {
-                            overlay.ctx.putImageData(p, x, y);
-                            // count++;
-                            // xSum += x;
-                            // ySum += y;
+                            overlay.detector.ctx.putImageData(p, x, y);
+                            count += count;
+                            x_sum += x;
+                            y_sum += y;
                         }
                     }
                 }
+
+                ret.last_run_data = {
+                    count: count,
+                    x_sum: x_sum,
+                    y_sum: y_sum
+                };
             }());
         }
-
     };
 
     return ret;

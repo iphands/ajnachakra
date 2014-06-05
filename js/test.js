@@ -29,7 +29,7 @@ define([], function () {
 
     pub.init_canvas = function (canvas) {
         var v,
-            overlay = document.getElementById('overlay'),
+            overlay = document.getElementById('overlay-gui'),
             context,
             ret = {};
 
@@ -46,10 +46,14 @@ define([], function () {
         context = canvas.getContext('2d');
 
         v.addEventListener('loadedmetadata', function () {
-            canvas.height = v.videoHeight;
             canvas.width = v.videoWidth;
-            overlay.height = v.videoHeight;
+            canvas.height = v.videoHeight;
+
             overlay.width = v.videoWidth;
+            overlay.height = v.videoHeight;
+
+            document.getElementById('overlay-detector').width = v.videoWidth;
+            document.getElementById('overlay-detector').height = v.videoHeight;
         });
 
         ret.draw();
@@ -61,7 +65,7 @@ define([], function () {
     window.require(['picker', 'shadow_canvas', 'detector', 'overlay'], function (picker, shadow, detector, overlay) {
         function do_frame() {
             if (picker.color_array) {
-                overlay.clear();
+                overlay.detector.clear();
                 detector.detect(picker.color_array);
             }
             c.draw();

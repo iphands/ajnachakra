@@ -1,6 +1,11 @@
-#overlay {
+#overlay-gui {
 	position: absolute;
 	z-index: 101;
+}
+
+#overlay-detector {
+	position: absolute;
+	z-index: 100;
 }
 
 #video {

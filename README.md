@@ -1,4 +1,5 @@
 ajnachakra
 ==========
 
-Vision libs
+Simple vision libs for JavaScript
+
