@@ -1,0 +1,23 @@
+%html{"ng-app" => "ajnachakra"}
+  %head
+    %title  Ajna Chakra demo page
+    %link{:rel => "stylesheet", :type => "text/css", :href => "./css/demo.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "./css/vendor/bootstrap-3.1.1-dist/css/bootstrap.css"}
+    %script{:src => "./js/vendor/requirejs/require.js", "data-main" => "./js/main"}
+    %script{:src => "./js/vendor/angular/angular.min.js"}
+    %script{:src => "./js/ui/ui.js"}
+
+  %body
+    .container{"ng-controller" => "UiController"}
+      .row
+        .col-sm-12
+          %canvas.overlay#overlay-gui
+          %canvas.overlay#overlay-detector
+          %video#video{:autoplay => ""}
+      .row
+        .form-group
+          %label.col-sm-2 Fudge percent
+          %input{:type => "number", :max => "80", :min => "1", "ng-model" => "fudge"}
+        .form-group
+          %label.col-sm-2 Pixel skip
+          %input{:type => "number", :min => "1", "ng-model" => "skip"}
