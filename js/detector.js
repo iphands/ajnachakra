@@ -4,12 +4,21 @@
 window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
     var ret = {},
         priv = {},
-        skip = 3,
-        fudge = 0.06,
         debug = true,
         v = document.getElementById('video'),
         ticks = 0,
-        p = overlay.detector.ctx.createImageData(1, 1);
+        p = overlay.detector.ctx.createImageData(1, 1),
+        settings;
+
+    function Settings() {
+        this.fudge = 0.06;
+        this.skip = 3;
+    }
+
+
+    settings = new Settings();
+
+    ret.settings = settings;
 
     p.data[0] = 0;
     p.data[1] = 255;
@@ -53,13 +62,13 @@ window.define(['overlay', 'shadow_canvas'], function (overlay,  shadow) {
                 // };
 
                 // priv.do_debug(function () { console.time('loop'); });
-                for (x = 0; x < v.videoWidth; x = x + skip) {
-                    for (y = 0; y < v.videoHeight; y = y + skip) {
+                for (x = 0; x < v.videoWidth; x = x + settings.skip) {
+                    for (y = 0; y < v.videoHeight; y = y + settings.skip) {
                         match = true;
                         // dont check alpha
                         for (i = 0; i < 4; i = i + 1) {
                             diff = Math.abs(shadow.get_pixel_color_fast(x, y, i) - color_array[i]) / 255;
-                            if (diff > fudge) {
+                            if (diff > settings.fudge) {
                                 match = false;
                                 break;
                             }

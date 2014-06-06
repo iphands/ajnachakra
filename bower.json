@@ -4,6 +4,7 @@
     "private": true,
     "directory" : "vendor",
     "dependencies": {
+		"angular": "*",
 		"jquery": "*",
         "requirejs": "*",
 		"domReady": "*"
