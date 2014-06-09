@@ -47,9 +47,11 @@ define([], function () {
 
         v.addEventListener('loadedmetadata', function () {
             canvas.width = v.videoWidth;
+            canvas.w4 = v.videoWidth * 4;
             canvas.height = v.videoHeight;
 
             overlay.width = v.videoWidth;
+            overlay.w4 = v.videoWidth * 4;
             overlay.height = v.videoHeight;
 
             document.getElementById('overlay-detector').width = v.videoWidth;

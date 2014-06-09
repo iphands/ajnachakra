@@ -5,6 +5,7 @@ window.define([], function () {
         priv = {};
 
     ret.canvas = document.createElement('canvas');
+    ret.width4 = ret.canvas.width * 4;
     ret.ctx = ret.canvas.getContext('2d');
 
     ret.load_data = function () {
@@ -12,7 +13,7 @@ window.define([], function () {
     };
 
     ret.get_pixel_color_fast = function (x, y, i) {
-        return priv.data.data[((y * (ret.canvas.width * 4)) + (x * 4)) + i];
+        return priv.data.data[((y * (ret.canvas.w4)) + (x * 4)) + i];
     };
 
     ret.get_pixel_color = function (x, y) {
